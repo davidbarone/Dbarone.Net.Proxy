@@ -12,6 +12,9 @@ using System.Reflection;
 /// </summary>
 public class ProxyGenerator<T> : DispatchProxy
 {
+    /// <summary>
+    /// Sets or gets the proxy interceptor. The interceptor can intercept before / after method invocations on the target object.
+    /// </summary>
     public InterceptDelegate? Interceptor { get; set; }
 
     /// <summary>
@@ -19,6 +22,11 @@ public class ProxyGenerator<T> : DispatchProxy
     /// </summary>
     public T? Target { get; private set; }
 
+    /// <summary>
+    /// Returns a proxy of the target object, which can be intercepted.
+    /// </summary>
+    /// <param name="target">The target object.</param>
+    /// <returns>A proxy of the target object, which can be intercepted.</returns>
     public T Decorate(T target)
     {
         var proxy = Create<T, ProxyGenerator<T>>();
@@ -27,6 +35,12 @@ public class ProxyGenerator<T> : DispatchProxy
         return proxy;
     }
 
+    /// <summary>
+    /// Returns a proxy of the target object, which can be intercepted.
+    /// </summary>
+    /// <param name="target">The target object.</param>
+    /// <param name="interceptor">The interceptor to use.</param>
+    /// <returns>A proxy of the target object, which can be intercepted.</returns>
     public T Decorate(T target, InterceptDelegate interceptor)
     {
         var proxy = Create<T, ProxyGenerator<T>>();
@@ -35,6 +49,13 @@ public class ProxyGenerator<T> : DispatchProxy
         return proxy;
     }
 
+    /// <summary>
+    /// Called whenever a target method is invoked.
+    /// </summary>
+    /// <param name="targetMethod">The target method.</param>
+    /// <param name="args">The args used in the target invocation.</param>
+    /// <returns>Returns the result of the invocation including any changed made by the interceptor.</returns>
+    /// <exception cref="ArgumentException"></exception>
     protected override object? Invoke(MethodInfo? targetMethod, object?[]? args)
     {
         if (targetMethod != null)

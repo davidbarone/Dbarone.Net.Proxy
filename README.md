@@ -1,5 +1,5 @@
 # Dbarone.Net.Proxy
-A .NET Proxy / Decorator generator.
+A .NET Proxy / Decorator generator using interceptors.
 
 Although .NET Core does not including remoting functionality or the RealProxy class found in .NET Framework, it does include a DispatchProxy class in the `System.Reflection` namespace which can be used for basic aspect oriented programming (AOP) use cases like logging, caching, and security.
 
@@ -88,3 +88,4 @@ public class Program
 ```
 
 ## Documentation
+For full details of the library, please refer to the [documentation](https://github.com/davidbarone/Dbarone.Net.Proxy/blob/main/Documentation.md).
