@@ -4,6 +4,8 @@ using System.Reflection;
 
 /// <summary>
 /// Provides proxy functionality using DispatchProxy. Can be used for AOP use cases.
+/// Instances of ProxyGenerator are able to generate proxies using the `Decorate` method
+/// with an optional `Interceptor` providing decorator or proxy behaviour.
 /// https://www.c-sharpcorner.com/article/aspect-oriented-programming-in-c-sharp-using-dispatchproxy/
 /// https://devblogs.microsoft.com/dotnet/migrating-realproxy-usage-to-dispatchproxy/
 /// https://docs.microsoft.com/en-us/dotnet/api/system.reflection.dispatchproxy?view=net-6.0
