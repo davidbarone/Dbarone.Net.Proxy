@@ -15,7 +15,7 @@ public class ProxyGenerator<T> : DispatchProxy
     /// <summary>
     /// Sets or gets the proxy interceptor. The interceptor can intercept before / after method invocations on the target object.
     /// </summary>
-    public InterceptDelegate? Interceptor { get; set; }
+    public InterceptDelegate<T>? Interceptor { get; set; }
 
     /// <summary>
     /// Expose the target object as a read-only property.
@@ -41,7 +41,7 @@ public class ProxyGenerator<T> : DispatchProxy
     /// <param name="target">The target object.</param>
     /// <param name="interceptor">The interceptor to use.</param>
     /// <returns>A proxy of the target object, which can be intercepted.</returns>
-    public T Decorate(T target, InterceptDelegate interceptor)
+    public T Decorate(T target, InterceptDelegate<T> interceptor)
     {
         var proxy = Create<T, ProxyGenerator<T>>();
         (proxy as ProxyGenerator<T>)!.Target = target;
@@ -62,10 +62,11 @@ public class ProxyGenerator<T> : DispatchProxy
         {
             try
             {
-                InterceptorArgs beforeArgs = new InterceptorArgs()
+                InterceptorArgs<T> beforeArgs = new InterceptorArgs<T>()
                 {
                     BoundaryType = BoundaryType.Before,
                     TargetMethod = targetMethod,
+                    Target = this.Target,
                     Args = args,
                     Result = null,
                     Exception = null,
@@ -83,10 +84,11 @@ public class ProxyGenerator<T> : DispatchProxy
                 {
                     var result = targetMethod.Invoke(Target, args);
 
-                    InterceptorArgs afterArgs = new InterceptorArgs()
+                    InterceptorArgs<T> afterArgs = new InterceptorArgs<T>()
                     {
                         BoundaryType = BoundaryType.After,
                         TargetMethod = targetMethod,
+                        Target = this.Target,
                         Args = args,
                         Result = result,
                         Exception = null,
@@ -106,10 +108,11 @@ public class ProxyGenerator<T> : DispatchProxy
             }
             catch (Exception ex)
             {
-                InterceptorArgs exceptionArgs = new InterceptorArgs()
+                InterceptorArgs<T> exceptionArgs = new InterceptorArgs<T>()
                 {
                     BoundaryType = BoundaryType.After,
                     TargetMethod = targetMethod,
+                    Target = this.Target,
                     Args = args,
                     Result = null,
                     Exception = ex.InnerException ?? ex,

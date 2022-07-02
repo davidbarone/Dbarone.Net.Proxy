@@ -4,4 +4,4 @@ namespace Dbarone.Net.Proxy;
 /// Defines the method signature of an interceptor.
 /// </summary>
 /// <param name="interceptionArgs"></param>
-public delegate void InterceptDelegate(InterceptorArgs interceptionArgs);
+public delegate void InterceptDelegate<T>(InterceptorArgs<T> interceptionArgs);

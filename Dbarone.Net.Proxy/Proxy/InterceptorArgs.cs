@@ -4,7 +4,7 @@ using System.Reflection;
 /// <summary>
 /// Defines the arguments passed to an interceptor.
 /// </summary>
-public class InterceptorArgs
+public class InterceptorArgs<T>
 {
     /// <summary>
     /// The interceptor event type.
@@ -15,7 +15,12 @@ public class InterceptorArgs
     /// The method on the target object being invoked.
     /// </summary>
     public MethodInfo TargetMethod { get; set; } = default!;
-    
+
+    /// <summary>
+    /// The target object being wrapped in a proxy.
+    /// </summary>
+    public T? Target { get; set; } = default!;
+
     /// <summary>
     /// Arguments passed to the target method being invoked.
     /// </summary>

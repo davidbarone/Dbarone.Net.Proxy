@@ -28,7 +28,7 @@ public class Dog : IAnimal
 /// <summary>
 /// Simple interceptor class.
 /// </summary>
-public class TestInterceptor
+public class TestInterceptor<T>
 {
     public int MethodsIntercepted = 0;
     public int ExceptionsIntercepted = 0;
@@ -37,7 +37,7 @@ public class TestInterceptor
     public bool CancelAfter { get; set; }
     public bool CancelException { get; set; }
     public bool DuckInterceptor { get; set; }
-    public void Interceptor(InterceptorArgs interceptorArgs)
+    public void Interceptor(InterceptorArgs<T> interceptorArgs)
     {
         MethodsIntercepted++;
         if (interceptorArgs.Exception != null)
@@ -69,7 +69,7 @@ public class ProxyGeneratorTests
     public void ProxyGenerator_Method()
     {
         var dog = new Dog("Fido");
-        var interceptor = new TestInterceptor();
+        var interceptor = new TestInterceptor<IAnimal>();
         var generator = new ProxyGenerator<IAnimal>();
         generator.Interceptor = interceptor.Interceptor;
         var proxy = generator.Decorate(dog);
@@ -81,7 +81,7 @@ public class ProxyGeneratorTests
     public void ProxyGenerator_Property()
     {
         var dog = new Dog("Fido");
-        var interceptor = new TestInterceptor();
+        var interceptor = new TestInterceptor<IAnimal>();
         var generator = new ProxyGenerator<IAnimal>();
         generator.Interceptor = interceptor.Interceptor;
         var proxy = generator.Decorate(dog);
@@ -104,7 +104,7 @@ public class ProxyGeneratorTests
     public void ProxyGenerator_CancelBefore()
     {
         var dog = new Dog("Fido");
-        var interceptor = new TestInterceptor();
+        var interceptor = new TestInterceptor<IAnimal>();
         interceptor.CancelBefore = true;
         var generator = new ProxyGenerator<IAnimal>();
         var proxy = generator.Decorate(dog, interceptor.Interceptor);
@@ -117,7 +117,7 @@ public class ProxyGeneratorTests
     public void ProxyGenerator_Exception()
     {
         var dog = new Dog("Fido");
-        var interceptor = new TestInterceptor();
+        var interceptor = new TestInterceptor<IAnimal>();
         var generator = new ProxyGenerator<IAnimal>();
         var proxy = generator.Decorate(dog, interceptor.Interceptor);
 
@@ -135,7 +135,7 @@ public class ProxyGeneratorTests
     public void ProxyGenerator_CancelException()
     {
         var dog = new Dog("Fido");
-        var interceptor = new TestInterceptor();
+        var interceptor = new TestInterceptor<IAnimal>();
         interceptor.CancelException = true;
         var generator = new ProxyGenerator<IAnimal>();
         var proxy = generator.Decorate(dog, interceptor.Interceptor);
@@ -150,7 +150,7 @@ public class ProxyGeneratorTests
     public void ProxyGenerator_ChangeResult()
     {
         var dog = new Dog("Fido");
-        var interceptor = new TestInterceptor();
+        var interceptor = new TestInterceptor<IAnimal>();
         interceptor.DuckInterceptor = true;
         var generator = new ProxyGenerator<IAnimal>();
         var proxy = generator.Decorate(dog, interceptor.Interceptor);
