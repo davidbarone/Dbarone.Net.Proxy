@@ -17,6 +17,7 @@ The target object is decorated using an interceptor method. The interceptor meth
 | ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | BoundaryType | BoundaryType | Contains the interception hook (Before, After, Exception).                                                                   |
 | TargetMethod | MethodInfo   | The target method being invoked.                                                                                             |
+| Target       | T            | The target object being wrapped.                                                                                             |
 | Args         | object?[]?   | The parameters used for the target method invocation.                                                                        |
 | Result       | object?      | The result of the target method invocation.                                                                                  |
 | Continue     | bool         | Can be set to false to stop further execution of the method. Set to false when handling exceptions to swallow the exception. |
