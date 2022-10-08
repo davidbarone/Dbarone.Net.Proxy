@@ -1,9 +1,9 @@
 # Dbarone.Net.Proxy
 A .NET Proxy / Decorator generator using interceptors.
 
-Although .NET Core does not include remoting functionality or the RealProxy class found in .NET Framework, it does include a DispatchProxy class in the `System.Reflection` namespace which can be used for basic aspect oriented programming (AOP) use cases like logging, caching, and security.
+Although .NET Core does not include remoting functionality or the RealProxy class found in .NET Framework, it does include a `DispatchProxy` class in the `System.Reflection` namespace which can be used for basic aspect oriented programming (AOP) use cases like logging, caching, and security. the `DispactchProxy` does not require proxied types to derive from `MarshallByRefObject`, but proxied types must implement an interface.
 
-The main class in this library is the `ProxyGenerator` class. This class can be used to generate proxy objects that wrap the original object, and provide 'Before' and 'After' interception hooks denoted by the `BoundaryType` enum:
+I've wrapped up the functionality provided by `DispatchProxy` into this library - the main class being the `ProxyGenerator` class. This class can be used to generate proxy objects that wrap the original object, and provide 'Before' and 'After' interception hooks denoted by the `BoundaryType` enum:
 
 | Interception Hook | Invoked                             |
 | ----------------- | ----------------------------------- |
@@ -15,7 +15,7 @@ The target object is decorated using an interceptor method. The interceptor meth
 
 | Parameter    | Type         | Description                                                                                                                  |
 | ------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| BoundaryType | BoundaryType | Contains the interception hook (Before, After, Exception).                                                                   |
+| BoundaryType | BoundaryType | Contains the interception hook (Before, After).                                                                   |
 | TargetMethod | MethodInfo   | The target method being invoked.                                                                                             |
 | Target       | T            | The target object being wrapped.                                                                                             |
 | Args         | object?[]?   | The parameters used for the target method invocation.                                                                        |
